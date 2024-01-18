@@ -1,0 +1,13 @@
+<div *ngIf="insurances$ | async as insurances">
+  <div>
+    <app-billing-details-insurance></app-billing-details-insurance>
+  <div>
+
+  <div class="action-buttons">
+    <button mat-stroked-button color="primary" *ngIf="insurances.length < 3" mat-button (click)="addInsurance(0)">Add Insurance</button>
+    <button mat-button mat-stroked-button color="primary" (click)="reset()">Reset</button>
+    <button mat-button mat-stroked-button color="primary" (click)="clear()">Clear</button>
+    <button mat-button mat-stroked-button color="primary" (click)="addInsurances()">Add Insurances</button>
+    <button mat-button mat-stroked-button color="primary" (click)="submit()">Submit</button>
+  </div>
+</div>

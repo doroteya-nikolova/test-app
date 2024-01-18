@@ -1,0 +1,32 @@
+<div class="billing-details-content">
+  <mat-card class="example">
+    <mat-card-header>
+      <mat-card-title>Billing</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ng-container *ngIf="form">
+        <mat-form-field appearance="outline" class="billing-type">
+          <mat-label class="mat-body-1">Billing method</mat-label>
+          <mat-select [formControl]="getBillingTypeControl()" [value]="'billingType.insurance'">
+            <mat-option *ngFor="let type of billingTypeOptions" [value]="type.value">{{ type.text }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </ng-container>
+
+      <app-billing-details-insurances *ngIf="getBillingTypeControl().value === billingType.Insurance"></app-billing-details-insurances>
+      <div *ngIf="getBillingTypeControl().value === billingType.PersonalInjury">Personal Injury</div>
+      <div *ngIf="getBillingTypeControl().value === billingType.WorkerCompensation">Work Compensation</div>
+      <div *ngIf="getBillingTypeControl().value === billingType.External">External</div>
+      <div *ngIf="getBillingTypeControl().value === billingType.SelfPay">Self Pay</div>
+      <div *ngIf="getBillingTypeControl().value === billingType.NonBillable">Non Billable</div>
+    </mat-card-content>
+  </mat-card>
+
+<div class="form-state">
+  <mat-card>
+    <mat-card-content>
+      <pre><code [innerHTML]="formattedFormState()"></code></pre>
+    </mat-card-content>
+  </mat-card>
+</div>
+</div>

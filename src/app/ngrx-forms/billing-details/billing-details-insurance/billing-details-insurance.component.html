@@ -1,0 +1,81 @@
+<ng-container *ngIf="formState$ | async as formState">
+  <div class="insurances-content">
+    <div class="insurance-card-container" *ngFor="let insurance of (insurances$ | async); trackBy: trackByIndex; let i = index">
+      <div class="insurance-header">
+        <div class="header-item">
+          <halo-inactive-pill *ngIf="!insurance.isActive"></halo-inactive-pill>
+          <ng-container *ngIf="!insurance.isPrimary">
+            <button mat-button color="primary" (click)="setAsPrimaryInsurance(i, insurance.isPrimary)">Set as primary</button>
+          </ng-container>
+          <halo-primary-pill *ngIf="insurance.isPrimary" class="primary"></halo-primary-pill>
+        </div>
+        <div class="header-item">
+          <button mat-icon-button (click)="removeInsurance(i)">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+    
+      <div class="insurance-content">
+        <div class="insurance-row row-col-1">
+          <mat-form-field class="example-full-width">
+            <input type="text"
+              placeholder="Insurance plan"
+              matInput
+              [ngrxFormControlState]="formState.controls.insurances.controls[i].controls.insurancePlanId"
+              [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let option of insurancePlans" [value]="option">
+                {{ option.displayName }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="insurance-row">
+          <!-- Id number -->
+          <mat-form-field appearance="outline" class="expand-width-field fs-mask">
+            <mat-label>ID number</mat-label>
+            <input matInput [ngrxFormControlState]="formState.controls.insurances.controls[i].controls.idNumber"/>
+            <!-- <mat-error *ngIf="getControlErrorMessage(form.get('idNumber'))">Enter ID number</mat-error> -->
+          </mat-form-field>
+    
+          <!-- Group number< -->
+          <mat-form-field appearance="outline" class="expand-width-field">
+            <mat-label>Group number</mat-label>
+            <input matInput [ngrxFormControlState]="formState.controls.insurances.controls[i].controls.groupNumber"/>
+            <!-- <mat-error *ngIf="getControlErrorMessage(form.get('groupNumber'))">{{
+              getControlErrorMessage(form.get('groupNumber'))
+            }}</mat-error> -->
+          </mat-form-field>
+        </div>
+    
+        <!-- Policyholder -->
+        <div class="insurance-row policyholder-row">
+          <span class="policyholder-label">Policyholder</span>
+          <div class="expand-width-field edit-policyholder" *ngIf="!isPolicyholderSectionExpanded || !formState.controls.insurances.isSubmitted">
+            <span class="policyholder-value mat-body-2">{{ '' || 'Patient' }}</span>
+            <div class="flex-dot"></div>
+            <button mat-flat-button color="primary" (click)="showPolicyholderSection()"
+              >Edit policyholder</button
+            >
+          </div>
+        </div>
+    
+        <!-- Policyholder section -->
+        <div *ngIf="isPolicyholderSectionExpanded || formState.controls.insurances.isSubmitted" class="policyholder-section">
+          <div class="header">
+            <h3>Policyholder details</h3>
+            <button mat-flat-button color="primary" class="link" mat-button (click)="hidePolicyHolderForm()">
+              Hide policyholder
+            </button>
+          </div>
+    
+          <!-- <halo-policyholder-form [showRelationshipHeader]="false" [form]="policyHolderForm" [patient]="patient">
+          </halo-policyholder-form> -->
+        </div>
+      </div>
+    
+      <button mat-button (click)="linkPageToInsurance()">Link page as image</button>
+    </div>
+  </div>
+</ng-container>

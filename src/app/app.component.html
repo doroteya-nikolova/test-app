@@ -1,0 +1,11 @@
+<div class="root-container">
+  <mat-toolbar class="primary-header">
+    <button mat-button class="example-icon" [routerLink]="item.path" *ngFor="let item of headerMenu">
+      {{ item.label }}
+    </button>
+  </mat-toolbar>
+
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
+</div>
