@@ -15,6 +15,10 @@ const routes: Routes = [
     path: 'signals',
     loadChildren: () => import('./signals/signals.module').then(m => m.SignalsModule),
   },
+  {
+    path: 'ngrx-signals',
+    loadChildren: () => import('./ngrx-signals/ngrx-signals.module').then(m => m.NgrxSignalsModule),
+  },
   { path: '**', redirectTo: '/ngrx-forms' },
 ];
 

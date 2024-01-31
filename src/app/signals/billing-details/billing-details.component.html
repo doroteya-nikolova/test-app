@@ -6,7 +6,7 @@
     <mat-card-content>
       <mat-form-field appearance="outline" class="billing-type">
         <mat-label class="mat-body-1">Billing method</mat-label>
-        <mat-select (selectionChange)="switchBillingType()"  [value]="''" ngModel [formField]="billingTypeForm">
+        <mat-select [value]="''" ngModel [formField]="billingTypeForm">
           <mat-option *ngFor="let type of billingTypeOptions" [value]="type.value">{{ type.text }}</mat-option>
         </mat-select>
       </mat-form-field>

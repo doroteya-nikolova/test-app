@@ -1,9 +1,10 @@
 import { InsuranceForm } from 'src/app/shared/models';
 import { State as RootState } from '../../../app.reducer';
-import { AddArrayControlAction, FormGroupState, RemoveArrayControlAction, SetValueAction, createFormGroupState, formGroupReducer, setValue, updateGroup } from 'ngrx-forms';
+import { AddArrayControlAction, FormGroupState, RemoveArrayControlAction, createFormGroupState, formGroupReducer, setValue, updateGroup } from 'ngrx-forms';
 import { combineReducers, Action } from '@ngrx/store';
 import { AddInsurancesAction, ClearInsurancesAction, SetBillingTypeAction, SetInsuranceAsPrimaryAction } from '../actions/billing-form.actions';
 import { BillingType } from 'src/app/shared/constants';
+import { generateRandomId, initialInsurancePlan } from 'src/app/shared';
 
 export interface FormValue {
   billingType: BillingType;
@@ -22,68 +23,11 @@ export interface State extends RootState {
   };
 }
 
-export const initialInsurancePlan: InsuranceForm = {
-   id: '',
-   insurancePlanId: '',
-   idNumber: '',
-   groupNumber: '',
-   policyHolder: {
-    label: '',
-    firstName: '',
-    middleInitial: '',
-    lastName: '',
-    dateOfBirth: '',
-    birth: '',
-    relation: '',
-    sex: 0,
-    homePhone: '',
-    mobilePhone: '',
-    address: {
-      addressLine1: '',
-      addressLine2: '',
-      city: '',
-      state: '',
-      country: '',
-      poBox: '',
-      zipCode: ''
-    }
-   },
-   cardFrontId: '',
-   cardBackId: '',
-   cardFrontDocumentId: '',
-   cardBackDocumentId: '',
-   examInsurance: {
-    eligibility: {
-      status: '',
-      statusUpdatedOn: '',
-      lastStatus: '',
-      lastStatusUpdatedOn: ''
-    },
-    authorization: {
-      status: '',
-      number: '',
-      expirationDate: '',
-    },
-    examPrice: 0,
-    patientOutOfPocket: 0,
-    isLoading: false,
-    hasError: false,
-    errorMessage: ''
-   },
-   isPrimary: false,
-   isActive: true
- }
-
- function generateRandomId(): string {
-  return Math.floor(Math.random() * 100).toString();
-}
-
 // Generate a new random ID for each new instance of initialInsurancePlan
 export const createInitialInsurancePlan = () => ({
   ...initialInsurancePlan,
   id: generateRandomId(),
 });
-
 
 export const FORM_ID = 'billingForm';
 

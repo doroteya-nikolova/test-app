@@ -1,17 +1,25 @@
-import { Component } from '@angular/core';
-import { createInsurance, injectSignalForm } from '../billing-form.form';
+import { Component, inject } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { NgIf } from '@angular/common';
+import { BillingDetailsInsuranceComponent } from '../billing-details-insurance/billing-details-insurance.component';
+import { NgRxSignalsStore } from '../../store/ngrx-signals.store';
+import { InsuranceForm } from 'src/app/shared';
 
 @Component({
-  selector: 'app-billing-details-insurances',
-  templateUrl: './billing-details-insurances.component.html',
-  styleUrls: ['./billing-details-insurances.component.scss']
+    selector: 'app-billing-details-insurances',
+    templateUrl: './billing-details-insurances.component.html',
+    styleUrls: ['./billing-details-insurances.component.scss'],
+    standalone: true,
+    imports: [BillingDetailsInsuranceComponent, NgIf, MatButtonModule]
 })
 export class BillingDetailsInsurancesComponent {
-  insurances = injectSignalForm().controls.insurances.value();
-  insuranceForm = injectSignalForm().controls.insurances;
+  readonly store = inject(NgRxSignalsStore);
 
-  addInsurance() {
-    this.insuranceForm.addNewArrayItem();
+  insurances = this.store.insurancesEntities();
+  insuranceFormArray = this.store.formState().controls.insurances;
+
+  addInsurance(): void {
+    this.store.createInsuranceFormGroup();
   }
 
   addInsurances(): void {
@@ -168,17 +176,26 @@ export class BillingDetailsInsurancesComponent {
       }
     ];
     
-    this.insuranceForm.addNewArrayItem();
+    this.store.addInsurances(insurances);
   }
 
   reset(): void {
-    this.insuranceForm.reset();
-    this.insuranceForm.controls.update(insurances => [...insurances, createInsurance()])
+    this.store.formState().controls.insurances.reset([], { emitEvent: false });
   }
 
   clear(): void {
+    const insurances = this.store.formState().controls.insurances;
+    while (insurances.controls.length > 1) {
+      insurances.removeAt(0);
+    }
+
+    insurances.reset([], { emitEvent: false });
   }
 
-  submit(): void {
+  submit() {
+    const insurances = this.store.formState().value.insurances;
+    if (insurances) {
+      this.store.createInsurances(insurances as InsuranceForm[]);
+    }
   }
 }

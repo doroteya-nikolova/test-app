@@ -9,7 +9,7 @@ export class AppComponent {
   headerMenu = [
     {
       path: '/ngrx-forms',
-      label: 'Ngrx-forms',
+      label: 'NgRx Forms',
     },
     {
       path: '/form-services',
@@ -18,6 +18,10 @@ export class AppComponent {
     {
       path: '/signals',
       label: 'Signals',
+    },
+    {
+      path: '/ngrx-signals',
+      label: 'NgRx Signals',
     },
   ];
 }

@@ -1,0 +1,82 @@
+<div class="insurances-content">
+  <div class="insurance-card-container">
+    @if (insuranceForm) {
+      <ng-container>
+        <div class="insurance-header">
+          <div class="header-item">
+            @if (!insuranceForm.controls.isActive.value) {
+              <halo-inactive-pill></halo-inactive-pill>
+            }
+
+            @if (!insuranceForm.controls.isPrimary.value) {
+              <button mat-button color="primary" (click)="setAsPrimaryInsurance()">Set as primary</button>
+            } @else {
+              <halo-primary-pill class="primary"></halo-primary-pill>
+            }
+
+          </div>
+          <div class="header-item">
+            <button mat-icon-button (click)="removeInsurance()">
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+        </div>
+        
+        <div class="insurance-content" [formGroup]="insuranceForm">
+          <div class="insurance-row row-col-1">
+            <mat-form-field class="example-full-width">
+              <input type="text"
+                formControlName="insurancePlanId"
+                placeholder="Pick one"
+                matInput 
+                [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let option of insurancePlans" [value]="option">
+                  {{ option.displayName }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="insurance-row">
+            <!-- Id number -->
+            <mat-form-field appearance="outline" class="expand-width-field fs-mask">
+              <mat-label>ID number</mat-label>
+              <input matInput formControlName="idNumber"  />
+            </mat-form-field>
+      
+            <!-- Group number< -->
+            <mat-form-field appearance="outline" class="expand-width-field">
+              <mat-label>Group number</mat-label>
+              <input matInput formControlName="groupNumber"/>
+            </mat-form-field>
+          </div>
+      
+          <!-- Policyholder -->
+          <div class="insurance-row policyholder-row">
+            <span class="policyholder-label">Policyholder</span>
+            <div class="expand-width-field edit-policyholder">
+              <span class="policyholder-value mat-body-2">{{ '' || 'Patient' }}</span>
+              <div class="flex-dot"></div>
+              <button mat-flat-button color="primary" (click)="showPolicyholderSection()"
+                >Edit policyholder</button
+              >
+            </div>
+          </div>
+      
+          <!-- Policyholder section -->
+          @if (isPolicyholderSectionExpanded) {
+            <div class="policyholder-section">
+              <div class="header">
+                <h3>Policyholder details</h3>
+                <button mat-flat-button color="primary" class="link" mat-button (click)="hidePolicyHolderForm()">
+                  Hide policyholder
+                </button>
+              </div>
+            </div>
+          }
+        </div>
+      </ng-container>
+    }
+    <button mat-button (click)="linkPageToInsurance()">Link page as image</button>
+  </div>
+</div>

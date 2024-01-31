@@ -1,0 +1,16 @@
+<div>
+  <div>
+    @for (insurance of insuranceFormArray.controls; track $index) {
+      <app-billing-details-insurance [formId]="insurance.controls.id.value" [insurance]="insurances[$index]"></app-billing-details-insurance>
+    }
+  <div>
+  <div class="action-buttons">
+    @if (insuranceFormArray.controls.length < 3) {
+      <button mat-stroked-button color="primary" *ngIf="store.insurancesEntities().length < 3" mat-button (click)="addInsurance()">Add Insurance</button>
+    }
+    <button mat-button mat-stroked-button color="primary" (click)="reset()">Reset</button>
+    <button mat-button mat-stroked-button color="primary" (click)="clear()">Clear</button>
+    <button mat-button mat-stroked-button color="primary" (click)="addInsurances()">Add Insurances</button>
+    <button mat-button mat-stroked-button color="primary" (click)="submit()">Submit</button>
+  </div>
+</div>

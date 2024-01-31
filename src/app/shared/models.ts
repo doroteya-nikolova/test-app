@@ -1,7 +1,7 @@
 import { BillingType } from "./constants";
 
 export interface InsuranceWithPlan {
-  id?: string;
+  id: string;
   insurancePlan: InsurancePlan;
   idNumber?: string;
   groupNumber?: string;
@@ -12,6 +12,7 @@ export interface InsuranceWithPlan {
   cardBackDocumentId?: string;
   examInsurance?: ExamInsurance;
   isPrimary?: boolean;
+  isActive?: boolean;
   createdAt?: Date;
 }
 
@@ -98,4 +99,9 @@ export interface Authorization {
   expirationDate: string | null;
 }
 
-
+export interface LoadBillingResponse {
+  billingType: BillingType;
+  insurances: InsuranceWithPlan[];
+  workCompensations: any[];
+  personalInjuries: any[];
+}

@@ -1,8 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { InsuranceForm } from 'src/app/shared/models';
-import { createInsurance, injectSignalForm, provideSignalForm } from '../billing-form.form';
-import { CustomErrorComponent } from 'src/app/shared/components/custom-input-error/custom-input-error.component';
+import { injectSignalForm } from '../billing-form.form';
 
 @Component({
   selector: 'app-billing-details-insurance',
@@ -10,7 +9,7 @@ import { CustomErrorComponent } from 'src/app/shared/components/custom-input-err
   styleUrls: ['./billing-details-insurance.component.scss'],
 })
 export class BillingDetailsInsuranceComponent {
-  @Input() insurance?: InsuranceForm;
+@Input() insurance?: InsuranceForm;
 
   autocompleteControl = new FormControl();
   form = injectSignalForm().controls.insurances;
@@ -29,8 +28,16 @@ export class BillingDetailsInsuranceComponent {
     }))
   }
 
-  setAsPrimaryInsurance(indexToUpdate: number): void {
-    this.form.controls.mutate(insurances => insurances[indexToUpdate].controls.isPrimary.value.set(true));
+  setAsPrimaryInsurance(indexToUpdate: number): void {  
+    this.form.controls.update(insurances => {
+      return insurances.map((data, index) => {
+        if(index === indexToUpdate) {
+          data.controls.isPrimary.value.set(true)
+        }
+
+        return data;
+      })
+    });
   }
 
   removeInsurance(index: number): void {
