@@ -4,11 +4,10 @@
   "type": "module",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "concurrently \"ng serve\" \"npm run --prefix server serve\"",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "serve": "concurrently \"ng serve\" \"npm run --prefix server serve\""
+    "test": "ng test"
   },
   "private": true,
   "dependencies": {
