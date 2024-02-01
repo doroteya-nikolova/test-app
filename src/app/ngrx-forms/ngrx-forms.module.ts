@@ -25,7 +25,6 @@ const declarations = [
     ReactiveFormsModule,
     SharedModule,
     StoreModule.forFeature('billingForm', reducer),
-
     RouterModule.forChild([
       { path: '', component: BillingDetailsComponent },
     ]), 

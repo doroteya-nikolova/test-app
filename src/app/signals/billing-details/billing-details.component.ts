@@ -48,11 +48,6 @@ export class BillingDetailsComponent {
     }
   ];
 
-  constructor() {}
-
-  switchBillingType(): void {
-  }
-
   findTextByValue(selectedValue: string): string {
     return this.billingTypeOptions.find((b) => b.value === selectedValue)?.text || '';
   }

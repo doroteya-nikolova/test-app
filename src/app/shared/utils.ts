@@ -17,3 +17,7 @@ export class CustomRouterStateSerializer
     return { url, queryParams };
   }
 }
+
+export function generateRandomId(): string {
+  return Math.floor(Math.random() * 100).toString();
+}

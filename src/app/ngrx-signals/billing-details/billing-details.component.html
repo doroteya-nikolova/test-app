@@ -1,0 +1,51 @@
+<div class="billing-details-content">
+  <mat-card class="example">
+    <mat-card-header>
+      <mat-card-title>Billing</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      @if (formGroup) {
+        <mat-form-field appearance="outline" class="billing-type">
+          <mat-label class="mat-body-1">Billing method</mat-label>
+          <mat-select [formControl]="billingTypeControl" [value]="billingTypeControl.value" (selectionChange)="changeBillingType($event.value)">
+            @for (type of billingTypeOptions; track type.text) {
+
+              <mat-option *ngFor="let type of billingTypeOptions" [value]="type.value">{{ type.text }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+      }
+
+      @if (store.isLoading()) {
+        <div class="content">
+          <!-- Content -->
+        <mat-spinner></mat-spinner>
+      </div>
+      } @else {
+        <ng-container>
+          @if (store.billingType() === billingType.Insurance) {
+            <app-billing-details-insurances></app-billing-details-insurances>
+          } @else if (store.billingType() === billingType.PersonalInjury) {
+            <div>Personal Injury</div>
+          } @else if (store.billingType() === billingType.WorkerCompensation) {
+            <div>Work Compensation</div>
+          } @else if (store.billingType() === billingType.External) { 
+            <div>External</div>
+          } @else if (store.billingType() === billingType.SelfPay) { 
+            <div>Self Pay</div>
+          } @else if (store.billingType() === billingType.NonBillable) { 
+            <div>Non Billable</div>
+          } 
+        </ng-container>
+      }
+    </mat-card-content>
+  </mat-card>
+
+<div class="form-state">
+  <mat-card>
+    <mat-card-content>
+      <pre><code [innerHTML]="formattedFormState()"></code></pre>
+    </mat-card-content>
+  </mat-card>
+</div>
+</div>
